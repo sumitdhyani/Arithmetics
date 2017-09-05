@@ -2,6 +2,29 @@
 #include <iostream>
 #include "CommonUtils.h"
 
+class Fraction;
+
+Fraction operator+(LLINT num, const Fraction& fraction);
+
+Fraction operator-(LLINT num, const Fraction& fraction);
+
+Fraction operator*(LLINT num, const Fraction& fraction);
+
+Fraction operator/(LLINT num, const Fraction& fraction);
+
+bool operator==(LLINT num, const Fraction& fraction);
+
+bool operator!=(LLINT num, const Fraction& fraction);
+
+bool operator<(LLINT num, const Fraction& fraction);
+
+bool operator<=(LLINT num, const Fraction& fraction);
+
+bool operator>(LLINT num, const Fraction& fraction);
+
+bool operator>=(LLINT num, const Fraction& fraction);
+
+
 class Fraction
 {
 protected:
@@ -17,6 +40,16 @@ public:
 		_denom = denom;
 
 		simplify();
+	}
+
+	LLINT integerValue()
+	{
+		return _num / _denom;
+	}
+
+	double decimalValue()
+	{
+		return (double)_num / (double)_denom;
 	}
 
 	void simplify()
@@ -41,7 +74,76 @@ public:
 
 	virtual ~Fraction() {}
 
-	
+	bool operator ==(const Fraction& fraction) const
+	{
+		return ((_num == fraction._num) && (_denom == fraction._denom));
+	}
+
+	bool operator ==(LLINT num) const
+	{
+		return (operator==(Fraction(num, 1)));
+	}
+
+	bool operator !=(const Fraction& fraction) const
+	{
+		return !(operator==(fraction));
+	}
+
+	bool operator !=(LLINT num) const
+	{
+		return !(operator==(num));
+	}
+
+	bool operator<(LLINT num) const
+	{
+		return operator<(Fraction(num, 1));
+	}
+
+	bool operator<=(LLINT num) const
+	{
+		return operator<=(Fraction(num, 1));
+	}
+
+	bool operator>(LLINT num) const
+	{
+		return operator>(Fraction(num, 1));
+	}
+
+	bool operator>=(LLINT num) const
+	{
+		return operator>=(Fraction(num, 1));
+	}
+
+	bool operator<(const Fraction& fraction) const
+	{
+		if ((_num > 0) != (fraction._num > 0))
+			return (_num < fraction._num);
+		else if (*this == fraction)
+			return false;
+		else
+		{
+			LLINT lcm = LCM(_denom, fraction._denom);
+			LLINT f1 = lcm/_denom;
+			LLINT f2 = lcm/fraction._denom;
+
+			return ((_num*f1) < (fraction._num*f2));
+		}
+	}
+
+	bool operator<=(const Fraction& fraction) const
+	{
+		return (operator<(fraction) || operator==(fraction));
+	}
+
+	bool operator>(const Fraction& fraction) const
+	{
+		return !operator<=(fraction);
+	}
+
+	bool operator>=(const Fraction& fraction) const
+	{
+		return !operator<(fraction);
+	}
 
 	Fraction operator +=(LLINT num)
 	{
@@ -69,10 +171,6 @@ public:
 	Fraction operator -=(const Fraction& fraction)
 	{
 		return operator+=(-fraction);
-		/*_num = (_num * fraction._denom - fraction._num * _denom);
-		_denom = _denom * fraction._denom;
-		simplify();
-		return *this;*/
 	}
 
 	Fraction operator *=(LLINT num)
@@ -82,7 +180,7 @@ public:
 
 	Fraction operator *=(Fraction fraction)
 	{
-		if ( (fraction == 0) || (*this == 0) )
+		if ( (0 == fraction) || (0 == *this) )
 		{
 			_num = 0;
 			_denom = 1;
@@ -109,15 +207,12 @@ public:
 
 	Fraction operator /=(LLINT num)
 	{
-		if (0 == num)
-			throw std::runtime_error("Attempt to divide by 0");
-		else
-			return operator/=(Fraction(num, 1));
+		return operator/=(Fraction(num, 1));
 	}
 
 	Fraction operator /=(Fraction fraction)
 	{
-		if (fraction == 0)
+		if (0 == fraction)
 			throw std::runtime_error("Attempt to divide by 0");
 		else
 			return operator *=(Fraction(fraction._denom, fraction._num));
@@ -156,16 +251,16 @@ public:
 		return Fraction(newNum, newDenom);*/
 	}
 
-	Fraction operator *(LLINT num)
+	Fraction operator *(LLINT num) const
 	{
 		return operator*(Fraction(num, 1));
 	}
 
-	Fraction operator *(Fraction fraction)
+	Fraction operator *(Fraction fraction) const
 	{
 		LLINT newNum;
 		LLINT newDenom;
-		if (fraction == 0)
+		if (0 == fraction)
 		{
 			newNum = 0;
 			newDenom = 1;
@@ -184,19 +279,14 @@ public:
 		return Fraction(newNum, newDenom);
 	}
 
-	Fraction operator /(LLINT num)
+	Fraction operator /(LLINT num) const
 	{
-		if (0 == num)
-			throw std::runtime_error("Attempt to divide by 0");
-		else
-		{
-			return operator/(Fraction(num, 1));
-		}
+		return operator/(Fraction(num, 1));
 	}
 
-	Fraction operator /(Fraction fraction)
+	Fraction operator /(Fraction fraction) const
 	{
-		if (fraction == 0)
+		if (0 == fraction)
 			throw std::runtime_error("Attempt to divide by 0");
 		else
 			return operator*(Fraction(fraction._denom, fraction._num));
@@ -209,63 +299,16 @@ public:
 		LLINT newDenom = _denom * fraction._denom;
 		return Fraction(newNum, newDenom);*/
 	}
-	bool operator ==(const Fraction& fraction) const
+
+	//Return numerator of simplified fraction
+	LLINT getNum() const
 	{
-		return ((_num == fraction._num) && (_denom == fraction._denom));
+		return _num;
 	}
 
-	bool operator ==(LLINT num) const
+	//Return denominator of simplified fraction
+	LLINT getDenom() const
 	{
-		return (operator==(Fraction(num, 1)));
-	}
-
-	bool operator !=(const Fraction& fraction) const
-	{
-		return !(operator==(fraction));
-	}
-
-	bool operator !=(LLINT num) const
-	{
-		return !(operator==(num));
-	}
-
-	bool operator<(LLINT num)
-	{
-		return operator<(Fraction(num,1));
-	}
-
-	bool operator<=(LLINT num)
-	{
-		return operator<=(Fraction(num, 1));
-	}
-
-	bool operator>(LLINT num)
-	{
-		return operator>(Fraction(num, 1));
-	}
-
-	bool operator>=(LLINT num)
-	{
-		return operator>=(Fraction(num, 1));
-	}
-
-	bool operator<(const Fraction& fraction)
-	{
-		LLINT lcm = LCM(_denom, fraction._denom);
-	}
-
-	bool operator<=(const Fraction& fraction)
-	{
-		return (operator<(fraction) || operator==(fraction));
-	}
-
-	bool operator>(const Fraction& fraction)
-	{
-		return !operator<=(fraction);
-	}
-
-	bool operator>=(const Fraction& fraction)
-	{
-		return !operator<(fraction);
+		return _denom;
 	}
 };

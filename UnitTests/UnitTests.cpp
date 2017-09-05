@@ -183,13 +183,6 @@ TEST(SubtractionOperator, SubtractionOperatorInteger)
 	EXPECT_EQ(Fraction(7, 2), fraction - (-5));
 }
 
-
-
-
-
-
-
-
 TEST(MultiPlicationOperator, ByInteger)
 {
 	EXPECT_EQ(Fraction(3, 7) * -3, Fraction(-27, 21));
@@ -225,8 +218,47 @@ TEST(Division, ByFraction)
 	EXPECT_EQ(Fraction(12, 7) / Fraction(21, -35), Fraction(40, -14));
 }
 
+#define TEST_RELATIONAL_OPERATOR_INEQUALITY(TestName, Operator, trueNess, falseNess)\
+TEST(RelationalOperators, TestName)						\
+{														\
+	trueNess(Fraction(4, 5) Operator Fraction(5, 6));	\
+	falseNess(Fraction(5, 6) Operator Fraction(4, 5));	\
+														\
+	trueNess(Fraction(-2, 5) Operator Fraction(0, -2));	\
+	falseNess(Fraction(0, 5) Operator Fraction(-2, 5));	\
+														\
+	trueNess(Fraction(-8, 7) Operator Fraction(5, 6));	\
+	falseNess(Fraction(5, 6) Operator Fraction(-8, 7));	\
+														\
+	trueNess(Fraction(-8, 7) Operator Fraction(-5, 6));\
+	falseNess(Fraction(-5, 6) Operator Fraction(-8, 7));\
+														\
+	trueNess(0 Operator Fraction(5, 6));				\
+	falseNess(Fraction(5, 6) Operator 0);				\
+														\
+	trueNess(Fraction(4, 5) Operator 1);				\
+	falseNess(1 Operator Fraction(4, 5));				\
+														\
+	trueNess(-1 Operator Fraction(-5, 6));				\
+	falseNess(Fraction(-5, 6) Operator -1);				\
+														\
+	trueNess(1 Operator Fraction(11, 3));				\
+	trueNess(-2 Operator Fraction(11, 3));				\
+	trueNess(0 Operator Fraction(11, 3));				\
+														\
+	falseNess(Fraction(11, 3) Operator 1);				\
+	falseNess(Fraction(11, 3) Operator -2);				\
+	falseNess(Fraction(11, 3) Operator 0);				\
+}
+
+
+TEST_RELATIONAL_OPERATOR_INEQUALITY(LessThan, <, EXPECT_TRUE, EXPECT_FALSE)
+TEST_RELATIONAL_OPERATOR_INEQUALITY(GreaterThan, >, EXPECT_FALSE, EXPECT_TRUE)
+TEST_RELATIONAL_OPERATOR_INEQUALITY(GreaterThanOrEqualTo, >=,EXPECT_FALSE, EXPECT_TRUE)
+
 int main(int argc, char** argv)
 {
+	2 + Fraction(7,9);
 	testing::InitGoogleTest(&argc, argv);
 	RUN_ALL_TESTS();
     return 0;
