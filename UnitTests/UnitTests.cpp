@@ -219,6 +219,8 @@ TEST(Division, ByFraction)
 }
 
 #define TEST_RELATIONAL_OPERATOR_INEQUALITY(TestName, Operator, trueNess, falseNess)\
+
+#define TEST_RELATIONAL_OPERATOR_INEQUALITY(TestName, Operator, trueNess, falseNess)\
 TEST(RelationalOperators, TestName)						\
 {														\
 	trueNess(Fraction(4, 5) Operator Fraction(5, 6));	\
