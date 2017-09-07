@@ -3,6 +3,7 @@
 
 #include <gtest/gtest.h>
 #include "Fraction.h"
+#include "BigInt.h"
 
 class FractionTest : public testing::Test
 {
@@ -258,9 +259,15 @@ TEST_RELATIONAL_OPERATOR_INEQUALITY(LessThan, <, EXPECT_TRUE, EXPECT_FALSE)
 TEST_RELATIONAL_OPERATOR_INEQUALITY(GreaterThan, >, EXPECT_FALSE, EXPECT_TRUE)
 TEST_RELATIONAL_OPERATOR_INEQUALITY(GreaterThanOrEqualTo, >=,EXPECT_FALSE, EXPECT_TRUE)
 
+TEST(BigInt, AdditionPositiveNumbers)
+{
+	EXPECT_TRUE(add("10", "1") == "11");
+	//EXPECT_EQ(add("9", "1"), "10");
+	//EXPECT_EQ(add("99","1"), "100");
+}
+
 int main(int argc, char** argv)
 {
-	2 + Fraction(7,9);
 	testing::InitGoogleTest(&argc, argv);
 	RUN_ALL_TESTS();
     return 0;

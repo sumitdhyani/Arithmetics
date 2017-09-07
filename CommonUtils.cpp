@@ -2,26 +2,6 @@
 #include <iostream>
 #include "CommonUtils.h"
 
-//LLINT HCF(LLINT n1, LLINT n2)
-//{
-//	if ((0 == n1) || (0 == n2))
-//		throw std::runtime_error("Attemting to find HCF of 0!");
-//
-//	n1 = abs(n1);
-//	n2 = abs(n2);
-//
-//	while (n1 != n2)
-//	{
-//		if (n1 > n2)
-//			n1 -= n2;
-//		else
-//			n2 -= n1;
-//	}
-//
-//	return n1;
-//}
-
-
 LLINT HCF(LLINT n1, LLINT n2)
 {
 	if ((0 == n1) || (0 == n2))

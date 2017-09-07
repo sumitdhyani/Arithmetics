@@ -146,10 +146,12 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\BigInt.h" />
     <ClInclude Include="..\..\CommonUtils.h" />
     <ClInclude Include="..\..\Fraction.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\BigInt.cpp" />
     <ClCompile Include="..\..\CommonUtils.cpp" />
     <ClCompile Include="..\..\Fraction.cpp" />
   </ItemGroup>
