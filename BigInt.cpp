@@ -107,8 +107,14 @@ bool operator<(const std::string& str, LLINT num)
 	bool res = false;
 	num = abs(num);
 	auto i = str.begin();
+	USINT n1, n2;
 	while( (num > 0) || (i != str.end()) )
 	{
-		if()
+		n1 = num;
+		n2 = (i == str.end())? 0 : 
+		if (num == 0)
+			return true
+		else if (i == str.end())
+			return false;
 	}
 }
