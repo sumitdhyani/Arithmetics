@@ -2,6 +2,10 @@
 #include "ConstTypeDefsMacrdos.h"
 #include <iostream>
 #include <string>
+std::string add( const std::string& s1, const std::string& s2, bool isNegative1 = false, bool isNegative2 = false );
+std::string add(const std::string& s1, LLINT num, bool isNegative = false);
+std::string subtract(const std::string& s1, LLINT num, bool isNegative = false);
+bool operator<(const std::string& str, LLINT num);
 //class BigInt
 //{
 //	std::string _integer;
@@ -55,4 +59,3 @@
 //	}
 //};
 
-std::string add(const std::string& s1, const std::string& s2);

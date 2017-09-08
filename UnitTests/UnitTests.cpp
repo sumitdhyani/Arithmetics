@@ -267,7 +267,14 @@ TEST(BigInt, AdditionPositiveNumbers)
 	EXPECT_EQ(add("98", "7"), "105");
 	EXPECT_EQ(add("55", "43"), "98");
 	EXPECT_EQ(add("999999999999999999999999999","999999999999999999999999999"), "1999999999999999999999999998");
-}
+
+	EXPECT_TRUE(add("10", 1) == "11");
+	EXPECT_EQ(add("9", 1), "10");
+	EXPECT_EQ(add("99", 1), "100");
+	EXPECT_EQ(add("98", 7), "105");
+	EXPECT_EQ(add("55", 43), "98");
+	EXPECT_EQ(add("999999999999999999999999999", 99), "1000000000000000000000000098");
+}														 
 
 int main(int argc, char** argv)
 {
